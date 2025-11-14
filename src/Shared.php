@@ -5,7 +5,7 @@ namespace ElliePHP\Components\Cache;
 use DateInterval;
 use DateTime;
 
-class Shared
+final readonly class Shared
 {
     /**
      * Convert TTL to seconds

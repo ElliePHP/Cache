@@ -13,7 +13,7 @@ use PDO;
 use Predis\Client;
 use Throwable;
 
-final class CacheFactory
+final readonly class CacheFactory
 {
     /**
      * Creates a cache driver instance based on configuration.

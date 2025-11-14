@@ -10,7 +10,7 @@ use ElliePHP\Components\Support\Util\Str;
  * The main Cache class that acts as a proxy to the configured cache driver.
  * It consistently applies a prefix to all keys and validates them according to PSR-16.
  */
-class Cache implements CacheInterface
+final class Cache implements CacheInterface
 {
     private const int MAX_CACHE_TTL = 2147483647;
     private const string CACHE_KEY = 'ellie_cache:';

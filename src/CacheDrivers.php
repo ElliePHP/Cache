@@ -5,7 +5,7 @@ namespace ElliePHP\Components\Cache;
 /**
  * Available cache driver types
  */
-class CacheDrivers
+readonly class CacheDrivers
 {
     public const string REDIS = 'redis';
     
