@@ -16,8 +16,6 @@ final readonly class RedisDriver implements CacheInterface
 
     public function get(string $key, mixed $default = null): mixed
     {
-        Shared::validateKey($key);
-        
         try {
             $value = $this->redis->get($key);
             // Redis returns null for non-existent keys
@@ -29,8 +27,6 @@ final readonly class RedisDriver implements CacheInterface
 
     public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
     {
-        Shared::validateKey($key);
-        
         try {
             $ttlSeconds = Shared::convertTtlToSeconds($ttl);
 
@@ -50,8 +46,6 @@ final readonly class RedisDriver implements CacheInterface
 
     public function delete(string $key): bool
     {
-        Shared::validateKey($key);
-        
         try {
             $result = $this->redis->del([$key]);
             return $result > 0;
@@ -72,8 +66,6 @@ final readonly class RedisDriver implements CacheInterface
 
     public function has(string $key): bool
     {
-        Shared::validateKey($key);
-        
         try {
             return (bool)$this->redis->exists($key);
         } catch (Throwable) {
@@ -107,10 +99,6 @@ final readonly class RedisDriver implements CacheInterface
         if (empty($keys)) {
             return [];
         }
-        
-        foreach ($keys as $key) {
-            Shared::validateKey($key);
-        }
 
         try {
             $values = $this->redis->mget($keys);
@@ -138,10 +126,6 @@ final readonly class RedisDriver implements CacheInterface
 
         if (empty($values)) {
             return true;
-        }
-        
-        foreach (array_keys($values) as $key) {
-            Shared::validateKey($key);
         }
 
         $ttlSeconds = Shared::convertTtlToSeconds($ttl);
@@ -179,10 +163,6 @@ final readonly class RedisDriver implements CacheInterface
 
         if (empty($keys)) {
             return true;
-        }
-        
-        foreach ($keys as $key) {
-            Shared::validateKey($key);
         }
 
         try {

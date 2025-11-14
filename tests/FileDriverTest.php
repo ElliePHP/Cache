@@ -154,9 +154,11 @@ class FileDriverTest extends TestCase
         $this->assertSame('test_value', $this->driver->get('test_key'));
     }
 
-    public function testInvalidKeyThrowsException(): void
+    public function testInvalidKeyDoesNotThrowInDriver(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->driver->set('', 'value', 3600);
+        // Drivers don't validate keys - that's done by the Cache wrapper
+        // This test ensures drivers can handle any key format
+        $this->assertTrue($this->driver->set('key:with:colons', 'value', 3600));
+        $this->assertSame('value', $this->driver->get('key:with:colons'));
     }
 }

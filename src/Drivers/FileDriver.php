@@ -30,7 +30,6 @@ final readonly class FileDriver implements CacheInterface
 
     public function get(string $key, mixed $default = null): mixed
     {
-        Shared::validateKey($key);
         $path = $this->getFilePath($key);
 
         if (!File::exists($path)) {
@@ -55,7 +54,6 @@ final readonly class FileDriver implements CacheInterface
 
     public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
     {
-        Shared::validateKey($key);
         
         try {
             $path = $this->getFilePath($key);
@@ -77,7 +75,6 @@ final readonly class FileDriver implements CacheInterface
 
     public function delete(string $key): bool
     {
-        Shared::validateKey($key);
         $path = $this->getFilePath($key);
         return File::delete($path);
     }
@@ -105,7 +102,6 @@ final readonly class FileDriver implements CacheInterface
 
     public function has(string $key): bool
     {
-        Shared::validateKey($key);
         return $this->get($key) !== null;
     }
 
@@ -146,7 +142,6 @@ final readonly class FileDriver implements CacheInterface
         $keys = Shared::iterableToArray($keys);
         
         foreach ($keys as $key) {
-            Shared::validateKey($key);
         }
         
         $result = [];
@@ -162,7 +157,6 @@ final readonly class FileDriver implements CacheInterface
         $values = Shared::iterableToArray($values);
         
         foreach (\array_keys($values) as $key) {
-            Shared::validateKey($key);
         }
 
         $success = true;
@@ -180,7 +174,6 @@ final readonly class FileDriver implements CacheInterface
         $keys = Shared::iterableToArray($keys);
         
         foreach ($keys as $key) {
-            Shared::validateKey($key);
         }
 
         $success = true;

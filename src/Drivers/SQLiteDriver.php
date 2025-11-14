@@ -33,7 +33,6 @@ final readonly class SQLiteDriver implements CacheInterface
 
     public function get(string $key, mixed $default = null): mixed
     {
-        Shared::validateKey($key);
         
         try {
             $stmt = $this->pdo->prepare(
@@ -50,7 +49,6 @@ final readonly class SQLiteDriver implements CacheInterface
 
     public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
     {
-        Shared::validateKey($key);
         
         try {
             $ttlSeconds = Shared::convertTtlToSeconds($ttl);
@@ -73,7 +71,6 @@ final readonly class SQLiteDriver implements CacheInterface
 
     public function delete(string $key): bool
     {
-        Shared::validateKey($key);
         
         try {
             return $this->pdo->prepare("DELETE FROM cache WHERE id = :id")->execute([':id' => $key]);
@@ -95,7 +92,6 @@ final readonly class SQLiteDriver implements CacheInterface
 
     public function has(string $key): bool
     {
-        Shared::validateKey($key);
         return $this->get($key) !== null;
     }
 
@@ -128,7 +124,6 @@ final readonly class SQLiteDriver implements CacheInterface
         }
         
         foreach ($keys as $key) {
-            Shared::validateKey($key);
         }
 
         try {
@@ -169,7 +164,6 @@ final readonly class SQLiteDriver implements CacheInterface
         }
         
         foreach (array_keys($values) as $key) {
-            Shared::validateKey($key);
         }
 
         try {
@@ -210,7 +204,6 @@ final readonly class SQLiteDriver implements CacheInterface
         }
         
         foreach ($keys as $key) {
-            Shared::validateKey($key);
         }
 
         try {

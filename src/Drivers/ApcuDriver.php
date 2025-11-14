@@ -18,21 +18,18 @@ final readonly class ApcuDriver implements CacheInterface
 
     public function get(string $key, mixed $default = null): mixed
     {
-        Shared::validateKey($key);
         $value = apcu_fetch($key, $success);
         return $success ? $value : $default;
     }
 
     public function set(string $key, mixed $value, null|int|DateInterval $ttl = null): bool
     {
-        Shared::validateKey($key);
         $ttlSeconds = Shared::convertTtlToSeconds($ttl);
         return apcu_store($key, $value, $ttlSeconds);
     }
 
     public function delete(string $key): bool
     {
-        Shared::validateKey($key);
         return apcu_delete($key);
     }
 
@@ -43,7 +40,6 @@ final readonly class ApcuDriver implements CacheInterface
 
     public function has(string $key): bool
     {
-        Shared::validateKey($key);
         return apcu_exists($key);
     }
 
@@ -64,7 +60,6 @@ final readonly class ApcuDriver implements CacheInterface
         $keys = Shared::iterableToArray($keys);
         
         foreach ($keys as $key) {
-            Shared::validateKey($key);
         }
         
         $result = [];
@@ -80,7 +75,6 @@ final readonly class ApcuDriver implements CacheInterface
         $values = Shared::iterableToArray($values);
         
         foreach (\array_keys($values) as $key) {
-            Shared::validateKey($key);
         }
         
         $ttlSeconds = Shared::convertTtlToSeconds($ttl);
@@ -100,7 +94,6 @@ final readonly class ApcuDriver implements CacheInterface
         $keys = Shared::iterableToArray($keys);
         
         foreach ($keys as $key) {
-            Shared::validateKey($key);
         }
 
         $success = true;
@@ -112,7 +105,5 @@ final readonly class ApcuDriver implements CacheInterface
 
         return $success;
     }
-
-
 
 }
